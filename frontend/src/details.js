@@ -6,7 +6,7 @@ const Details = () => {
   let [data, pickData] = useState("");
 
   const getdata = () => {
-    let url = "http://localhost:9999/customer/" + customerid;
+    let url = "https://billing-project.onrender.com/customer/" + customerid;
     let postdata = { method: "PUT" };
     fetch(url, postdata)
       .then((responsedata) => responsedata.json())
