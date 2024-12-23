@@ -8,7 +8,7 @@ const Productlist = () => {
 
   const getallproduct = () => {
     let url =
-      "http://localhost:9999/product";
+      "https://billing-project.onrender.com/product";
     fetch(url)
       .then((responsedata) => responsedata.json())
       .then((response) => {
@@ -21,7 +21,7 @@ const Productlist = () => {
   }, [1]);
 
   const del_product= (id) =>{
-    let url = "http://localhost:9999/product/" + id;
+    let url = "https://billing-project.onrender.com/product/" + id;
     let postdata = {method: "DELETE"}
      fetch(url, postdata)
      .then(responsedata => responsedata.json())
