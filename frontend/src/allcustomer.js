@@ -7,7 +7,7 @@ const AllCustomer = () => {
 
   const getallcustomer = () => {
     let url =
-      "http://localhost:9999/customer/" + localStorage.getItem("tokenid");
+      "https://billing-project.onrender.com/customer/" + localStorage.getItem("tokenid");
     fetch(url)
       .then((responsedata) => responsedata.json())
       .then((response) => {
