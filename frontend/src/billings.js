@@ -6,7 +6,7 @@ const Mybilling = () => {
 
   const getallcustomer = () => {
     let url =
-      "http://localhost:9999/customer/" + localStorage.getItem("tokenid");
+      "https://billing-project.onrender.com/customer/" + localStorage.getItem("tokenid");
     fetch(url)
       .then((responsedata) => responsedata.json())
       .then((response) => {
@@ -15,7 +15,7 @@ const Mybilling = () => {
   };
 
   const getallproduct = () => {
-    let url = "http://localhost:9999/product";
+    let url = "https://billing-project.onrender.com/product";
     fetch(url)
       .then((responsedata) => responsedata.json())
       .then((response) => {
@@ -70,7 +70,7 @@ const Mybilling = () => {
         "total": total*qty
      }
      
-  let url = "http://localhost:9999/billing";
+  let url = "https://billing-project.onrender.com/billing";
   let postdata = {
     headers: {'Content-Type': 'application/json'},
     method: "POST",
@@ -88,7 +88,7 @@ const Mybilling = () => {
  //fetch all bill
  let [allbill, updatebill] = useState( [] );
  const getbill = () =>{
-    fetch("http://localhost:9999/billing")
+    fetch("https://billing-project.onrender.com/billing")
     .then(responsedata=> responsedata.json())
     .then(response => {
         updatebill(response.reverse());
