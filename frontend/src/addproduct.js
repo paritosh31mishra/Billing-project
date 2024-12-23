@@ -21,7 +21,7 @@ const Addproduct = () => {
       "tokenno": localStorage.getItem("tokenid")
     };
 
-    let url = "http://localhost:9999/product";
+    let url = "https://billing-project.onrender.com/product";
     let postdata = {
       headers: { "Content-Type": "application/json" },
       method: "POST",
