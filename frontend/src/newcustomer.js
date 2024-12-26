@@ -22,7 +22,7 @@ const NewCustomer = () => {
       tokenno: localStorage.getItem("tokenid"),
     };
 
-    let url = "http://localhost:9999/customer";
+    let url = "https://billing-project.onrender.com/customer";
     let postdata = {
       headers: { "Content-Type": "application/json" },
       method: "POST",
