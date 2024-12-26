@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   const getallcustomer = () => {
     let url =
-      "http://localhost:9999/customer/" + localStorage.getItem("tokenid");
+      "https://billing-project.onrender.com/customer/" + localStorage.getItem("tokenid");
     fetch(url)
       .then((responsedata) => responsedata.json())
       .then((response) => {
@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const getallproduct = () => {
     let url =
-      "http://localhost:9999/product";
+      "https://billing-project.onrender.com/product";
     fetch(url)
       .then((responsedata) => responsedata.json())
       .then((response) => {
@@ -28,7 +28,7 @@ const Dashboard = () => {
    //fetch all bill
  let [allbill, updatebill] = useState( [] );
  const getbill = () =>{
-    fetch("http://localhost:9999/billing")
+    fetch("https://billing-project.onrender.com/billing")
     .then(responsedata=> responsedata.json())
     .then(response => {
         updatebill(response.reverse());
