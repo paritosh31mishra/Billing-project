@@ -12,7 +12,7 @@ const Editproduct = () =>{
         let [pdetails, pickDetails] = useState("");
       
         const getdata = () => {
-          let url = "http://localhost:9999/product/" + productid;
+          let url = "https://billing-project.onrender.com/product/" + productid;
           fetch(url)
             .then((responsedata) => responsedata.json())
             .then((response) => {
@@ -26,7 +26,7 @@ const Editproduct = () =>{
         const update = () => {
             updatetext("Please wait....");
             toast("Please wait Processing....");
-            let url = "http://localhost:9999/product/" + productid;
+            let url = "https://billing-project.onrender.com/product/" + productid;
             let data = {
                 "name": pname,
                 "price": pprice,
