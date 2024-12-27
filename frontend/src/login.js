@@ -28,10 +28,10 @@ const Login = () => {
              
                 if (userdata.status == "SUCCESS") {
                   toast("Success: Please wait Redirecting...")
-                  localStorage.setItem("tokenid", userdata.token);
-                  localStorage.setItem("myname", userdata.fullname);
-                  localStorage.setItem("myrole", userdata.role);
-                  window.location.reload();
+               //   localStorage.setItem("tokenid", userdata.token);
+               //   localStorage.setItem("myname", userdata.fullname);
+                //  localStorage.setItem("myrole", userdata.role);
+               //   window.location.reload();
                 }
                 else{
                   swal("Login Fail", "Invalid or Not Exist", "warning");
