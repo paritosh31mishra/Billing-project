@@ -69,7 +69,6 @@ process.on("SIGTERM", async () => {
   process.exit(0);
 });*/
 
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -85,14 +84,16 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins, // Directly pass the array of allowed origins
-    credentials: true, // Include credentials for cookies/sessions if needed
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow the request
+      } else {
+        callback(new Error("Not allowed by CORS")); // Block the request
+      }
+    },
+    credentials: true, // Include credentials (if needed)
   })
 );
-
-// (Optional) Add a global preflight handler for OPTIONS requests:
-app.options("*", cors());
-
 
 app.use(express.json());
 
@@ -121,3 +122,4 @@ process.on("SIGTERM", async () => {
   await mongoose.disconnect();
   process.exit(0);
 });
+
