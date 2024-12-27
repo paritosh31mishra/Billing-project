@@ -9,7 +9,7 @@ router.post("/", async (req,res)=>{
   let input = {"email": req.body.email, "password":req.body.password}
 
    let userinfo = await Myadmin.findOne( input );
-   if(input.email == null || input.password == null)
+   if(input.email == "" || input.password == "")
    {
    let info = {fullname:"", status:"FAIL", token:""};
      //   let info = { data: "req.body.email" };
