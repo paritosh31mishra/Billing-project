@@ -16,6 +16,7 @@ router.post("/", async (req,res)=>{
      res.status(201).json(info);
    } else{
         //let info = {fullname: userinfo.fullname, status: "SUCCESS", token:userinfo._id, role: userinfo.myrole};
+       //let info = {fullname: "paritosh", status: "SUCCESS", token:"1243", role: "kahfkjdf"};
         res.status(201).json(info);
    }
 
