@@ -31,7 +31,7 @@ const Login = () => {
                   localStorage.setItem("tokenid", "1234");
                //   localStorage.setItem("myname", userdata.fullname);
                 //  localStorage.setItem("myrole", userdata.role);
-               //   window.location.reload();
+                  window.location.reload();
                 }
                 else{
                   swal("Login Fail", "Invalid or Not Exist", "warning");
