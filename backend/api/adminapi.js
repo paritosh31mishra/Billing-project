@@ -5,6 +5,7 @@ module.exports = router;
 const Myadmin = require("../schema/adminschema");
 
 router.post("/", async (req,res)=>{
+    console.log("Request received at /auth endpoint:", req.body); // Log request body
    let input = {"email": req.body.email, "password":req.body.password}
 
    let userinfo = await Myadmin.findOne( input );
