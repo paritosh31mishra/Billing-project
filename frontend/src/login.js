@@ -28,7 +28,7 @@ const Login = () => {
              
                 if (userdata.status == "SUCCESS") {
                   toast("Success: Please wait Redirecting...")
-               //   localStorage.setItem("tokenid", userdata.token);
+                  localStorage.setItem("tokenid", "1234");
                //   localStorage.setItem("myname", userdata.fullname);
                 //  localStorage.setItem("myrole", userdata.role);
                //   window.location.reload();
