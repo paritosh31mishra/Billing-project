@@ -85,16 +85,14 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the request
-      } else {
-        callback(new Error("Not allowed by CORS")); // Block the request
-      }
-    },
-    credentials: true, // Include credentials (if needed)
+    origin: allowedOrigins, // Directly pass the array of allowed origins
+    credentials: true, // Include credentials for cookies/sessions if needed
   })
 );
+
+// (Optional) Add a global preflight handler for OPTIONS requests:
+app.options("*", cors());
+
 
 app.use(express.json());
 
