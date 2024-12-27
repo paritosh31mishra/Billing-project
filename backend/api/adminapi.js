@@ -15,7 +15,7 @@ router.post("/", async (req,res)=>{
      //   let info = { data: "req.body.email" };
      res.status(201).json(info);
    } else{
-        let info = {fullname: userinfo.fullname, status: "SUCCESS", token:userinfo._id, role: userinfo.myrole};
+        //let info = {fullname: userinfo.fullname, status: "SUCCESS", token:userinfo._id, role: userinfo.myrole};
         res.status(201).json(info);
    }
 
