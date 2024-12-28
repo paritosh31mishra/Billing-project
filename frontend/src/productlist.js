@@ -53,6 +53,7 @@ const Productlist = () => {
       </div>
       <div className="row">
         <div className="col-lg-12">
+         <div className="table-responsive"> {/* Added this wrapper */}
           <table
             className="table table-bordered text-center"
             border="2px"
@@ -94,6 +95,7 @@ const Productlist = () => {
               })}
             </tbody>
           </table>
+         </div>
         </div>
       </div>
     </div>
