@@ -5,18 +5,15 @@ module.exports = router;
 const Myadmin = require("../schema/adminschema");
 
 router.post("/", async (req,res)=>{
-    console.log("Request received at /auth endpoint:", req.body); // Log request body
-  let input = {"email": req.body.email, "password":req.body.password}
+   let input = {"email": req.body.email, "password":req.body.password}
 
    let userinfo = await Myadmin.findOne( input );
-   if(input.email == "" || input.password == "")
+   if( userinfo == null)
    {
-   let info = {fullname:"", status:"FAIL", token:""};
-     //   let info = { data: "req.body.email" };
+    let info = {fullname:"", status:"FAIL", token:""};
      res.status(201).json(info);
    } else{
-        //let info = {fullname: userinfo.fullname, status: "SUCCESS", token:userinfo._id, role: userinfo.myrole};
-       let info = {fullname: "paritosh", status: "SUCCESS", token:"1243", role: "kahfkjdf"};
+        let info = {fullname: userinfo.fullname, status: "SUCCESS", token:userinfo._id, role: userinfo.myrole};
         res.status(201).json(info);
    }
 
