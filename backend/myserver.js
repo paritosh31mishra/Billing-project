@@ -127,7 +127,7 @@ process.on("SIGTERM", async () => {
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+require(".env").config();
 
 const app = express();
 
