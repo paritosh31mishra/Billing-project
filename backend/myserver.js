@@ -25,7 +25,10 @@ app.use(
 );
 
 app.use(express.json());
-mongoose.connect("mongodb+srv://mishraparitosh31:pari31tosh@cluster0.nskf6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(
+  "mongodb+srv://mishraparitosh31:pari31tosh@cluster0.nskf6.mongodb.net/billingproject?retryWrites=true&w=majority&appName=Cluster0", 
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)
   .then(() => console.log("Database Connected..."))
   .catch((error) => console.error("Database connection failed:", error));
 
