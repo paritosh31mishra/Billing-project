@@ -8,13 +8,13 @@ const Login = () => {
     let [btncontrol, updatebtncontrol] = useState(false);
     let [btntext, updatebtntext] = useState("Login");
 
-    const loginCheck = ()=>{
+     const loginCheck = ()=>{
       if( email != "" && password!= "")
       {
             toast("Please wait Processing....");
             updatebtntext("Please wait....");
             updatebtncontrol(true);
-            let url = "https://billing-project.onrender.com/auth";
+            let url = "http://localhost:9999/auth";
             let logindata = { email: email, password: password };
             let postdata = {
               headers: { "Content-Type": "application/json" },
@@ -28,9 +28,9 @@ const Login = () => {
              
                 if (userdata.status == "SUCCESS") {
                   toast("Success: Please wait Redirecting...")
-                  localStorage.setItem("tokenid", "1234");
-               //   localStorage.setItem("myname", userdata.fullname);
-                //  localStorage.setItem("myrole", userdata.role);
+                  localStorage.setItem("tokenid", userdata.token);
+                  localStorage.setItem("myname", userdata.fullname);
+                  localStorage.setItem("myrole", userdata.role);
                   window.location.reload();
                 }
                 else{
