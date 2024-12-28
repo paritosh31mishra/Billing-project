@@ -153,6 +153,7 @@ const Mybilling = () => {
 
       <div className="row mt-4 mb-5">
           <div className="col-lg-12">
+              <div className="table-responsive"> {/* Added this wrapper */}
              <table className="table table-bordered">
                   <thead>
                       <tr>
@@ -189,6 +190,7 @@ const Mybilling = () => {
                     }
                    </tbody>           
              </table>
+             </div>
           </div>
       </div>
     </div>
