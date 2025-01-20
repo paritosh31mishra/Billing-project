@@ -74,7 +74,7 @@ const Login = () => {
                 <button className="btn btn-danger" onClick={loginCheck} disabled={btncontrol}>{btntext}</button>
               </div>
             </div>
-            <span> Email - admin@gmail.com </span> <span> Password -  123 </span>
+            <span> <i> Email - admin@gmail.com </i> </span> <span> <i>     Password -  123 </i> </span>
           </div>
           <div className="col-lg-4"></div>
         </div>
