@@ -74,7 +74,11 @@ const Login = () => {
                 <button className="btn btn-danger" onClick={loginCheck} disabled={btncontrol}>{btntext}</button>
               </div>
             </div>
-            <span className = "text-danger"> <i>For Testing :  Email - admin@gmail.com </i> </span> <span className = "text-danger"> <i>     Password -  123 </i> </span>
+            <div className = "row text-danger" > 
+               <div className = " col-lg-6 ">  <span> <i>For Testing :  Email - admin@gmail.com </i> </span>  </div>
+               <div className = " col-lg-6" >  <span className = "text-danger"> <i>     Password -  123 </i> </span>  </div>
+            </div>
+          
           </div>
           <div className="col-lg-4"></div>
         </div>
