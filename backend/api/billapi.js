@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     price: req.body.price,
     total: req.body.total,
   });
-  
+
   let info = await newbill.save();
   res.status(201).json({ message: "Record Save Successfully", error: "NO" });
 });

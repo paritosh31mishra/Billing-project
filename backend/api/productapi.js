@@ -5,7 +5,7 @@ let Product = require("../schema/productschema");
 let Myadmin = require("../schema/adminschema");
 
 router.get("/", async(req,res)=>{
-        let productlist = await Product.find(); 
+        let productlist = await Product.find({ qty: { $gt: 0 } });
         if(productlist == null){
             res.status(201).json({"message": "No Records in Database !"});
         }
@@ -14,8 +14,6 @@ router.get("/", async(req,res)=>{
         }
 });
 
-
-//fetch using id
 router.get("/:productid", async(req, res) =>{
     let id = req.params.productid;
     let productinfo = await Product.findById(id);
@@ -28,13 +26,12 @@ router.get("/:productid", async(req, res) =>{
 })
 
 router.post("/", async(req,res)=>{
-   let token = req.body.tokenno;
+   try {
+    let token = req.body.tokenno;
     let admin = await Myadmin.findById(token);
-    if(admin == null)
-    {
-        res.status(201).json({"message": "Invalid token no.", "error": "YES"});
-    }
-    else{
+    if(admin == null) {
+        return res.status(401).json({"message": "Invalid token no.", "error": "YES"});
+    } else {
         let newProduct = new Product({
             "name": req.body.pname,
             "price": req.body.pprice,
@@ -43,7 +40,14 @@ router.post("/", async(req,res)=>{
         });
         let info = await newProduct.save();
         res.status(201).json({"message": "Record Save Successfully", "error": "NO"});
-    }  
+    }
+   } catch (error) {
+       console.error("Product creation failed:", error);
+       const message = error.name === "ValidationError"
+           ? Object.values(error.errors).map((fieldError) => fieldError.message).join(" ")
+           : "Could not save product. Please try again.";
+       return res.status(400).json({"message": message, "error": "YES"});
+   }
 })
 
 router.put("/:productid", async(req,res) =>{

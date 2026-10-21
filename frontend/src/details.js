@@ -1,81 +1,14 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const Details = () => {
-  let { customerid } = useParams();
-  let [data, pickData] = useState("");
-
-  const getdata = () => {
-    let url = "https://billing-project.onrender.com/customer/" + customerid;
-    let postdata = { method: "PUT" };
-    fetch(url, postdata)
-      .then((responsedata) => responsedata.json())
-      .then((response) => {
-        pickData(response);
-      });
-  };
-
-  const back = () => {
-    window.location.href = "#/allcustomer";
-  };
-
+  const { customerid } = useParams();
+  const [data, setData] = useState({});
   useEffect(() => {
-    getdata();
-  }, [1]);
-
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-12 text-center mt-5 mb-3">
-          <h2 className="text-primary">Details</h2>
-        </div>
-
-        <div className="col-lg-3"></div>
-        <div className="col-lg-6">
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th>Name: </th>
-                <td>{data.name}</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Email: </th>
-                <td> {data.email} </td>
-              </tr>
-              <tr>
-                <th>Mobile no: </th>
-                <td>{data.mobile}</td>
-              </tr>
-              <tr>
-                <th> City: </th>
-                <td>{data.city}</td>
-              </tr>
-              <tr>
-                <th> Zipcode :</th>
-                <td>{data.pincode}</td>
-              </tr>
-
-              <tr>
-                <th> Address :</th>
-                <td>{data.address}</td>
-              </tr>
-
-              <tr className="text-center">
-                <td colSpan={3}>
-                  <button className="btn btn-danger" onClick={back}>
-                    Back
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="col-lg-3"></div>
-      </div>
-    </div>
-  );
+    fetch(`https://billing-project.onrender.com/customer/${customerid}`, { method: "PUT" })
+      .then((response) => response.json()).then(setData).catch(() => setData({}));
+  }, [customerid]);
+  const fields = [["Email", data.email], ["Mobile", data.mobile], ["City", data.city], ["Pincode", data.pincode], ["Address", data.address]];
+  return <main className="app-shell"><div className="mx-auto max-w-2xl px-5 sm:px-8"><Link to="/allcustomer" className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"><i className="fa-solid fa-arrow-left mr-2 text-xs" />All customers</Link><div className="mb-6 mt-6"><p className="text-xs font-bold uppercase tracking-[.2em] text-indigo-600">Customer profile</p><h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{data.name || "Customer details"}</h1></div><section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm"><dl className="divide-y divide-slate-100">{fields.map(([label, value]) => <div key={label} className="grid gap-1 px-6 py-4 sm:grid-cols-[140px_1fr] sm:gap-5"><dt className="text-xs font-semibold uppercase tracking-wider text-slate-400">{label}</dt><dd className="break-words text-sm text-slate-700">{value || "—"}</dd></div>)}</dl></section></div></main>;
 };
-
 export default Details;

@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS Bundle (includes Popper.js)
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-if (localStorage.getItem("tokenid") == null) {
-  root.render(<Login />);
-} else {
-  root.render(<App />);
+function Root() {
+  const [authenticated, setAuthenticated] = useState(Boolean(localStorage.getItem("tokenid")));
+  return authenticated ? <App /> : <Login onLogin={() => setAuthenticated(true)} />;
 }
+root.render(<Root />);
 
 reportWebVitals();

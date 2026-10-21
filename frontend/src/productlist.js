@@ -1,104 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import swal from 'sweetalert';
 
+const API = "https://billing-project.onrender.com/product";
 const Productlist = () => {
-  let [Products, productlist] = useState([]);
-  let [keyword, updatekeyword] = useState("");
-
-  const getallproduct = () => {
-    let url =
-      "https://billing-project.onrender.com/product";
-    fetch(url)
-      .then((responsedata) => responsedata.json())
-      .then((response) => {
-        productlist(response);
-      });
+  const [products, setProducts] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const loadProducts = () => fetch(API).then((response) => response.json()).then((data) => setProducts(Array.isArray(data) ? data : [])).catch(() => setProducts([]));
+  useEffect(() => { loadProducts(); }, []);
+  const removeProduct = async (id) => {
+    if (!window.confirm("Delete this product?")) return;
+    try { const response = await fetch(`${API}/${id}`, { method: "DELETE" }).then((r) => r.json()); window.alert(response.message); loadProducts(); }
+    catch { window.alert("Could not delete the product. Please try again."); }
   };
-
-  useEffect(() => {
-    getallproduct();
-  }, [1]);
-
-  const del_product= (id) =>{
-    let url = "https://billing-project.onrender.com/product/" + id;
-    let postdata = {method: "DELETE"}
-     fetch(url, postdata)
-     .then(responsedata => responsedata.json())
-     .then(response => {
-       alert(response.message);
-        getallproduct();
-     })
-  }
-
-  return (
-    <div className="container mt-5">
-      <div className="row mb-5 mb-5">
-        <div className="col-lg-3"></div>
-        <div className="col-lg-6">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by name"
-            onChange={(obj) => updatekeyword(obj.target.value)}
-          />
-        </div>
-        <div className="col-lg-3"></div>
-      </div>
-
-      <div className="row text-center mb-3">
-        <center className="text-primary">
-          <h2>Product List : {Products.length}</h2>
-        </center>
-      </div>
-      <div className="row">
-        <div className="col-lg-12">
-         <div className="table-responsive"> {/* Added this wrapper */}
-          <table
-            className="table table-bordered text-center"
-            border="2px"
-            cellPadding="5px"
-            cellSpacing="1px"
-          >
-            <thead>
-              <tr>
-                <th>S.No.</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Details</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Products.map((product, index) => {
-                if (
-                  product.name.toLowerCase().includes(keyword.toLowerCase())
-                ) {
-                  return (
-                    <tr key={index}>
-                      <td>{index+1}</td>
-                      <td>{product.name}</td>
-                      <td>{product.price}</td>
-                      <td>{product.qty}</td>
-                      <td>{product.details}</td>
-                      <td>
-                        <Link className="btn btn-sm btn-danger"  to={`/editproduct/${product._id}`} >Edit</Link>
-                      </td>
-                      <td>
-                        <Link className="btn btn-sm btn-danger" onClick={del_product.bind(this, product._id)}>Delete</Link>
-                      </td>
-                    </tr>
-                  );
-                }
-              })}
-            </tbody>
-          </table>
-         </div>
-        </div>
-      </div>
-    </div>
-  );
+  const filtered = products.filter((product) => Number(product.qty) > 0 && (product.name || "").toLowerCase().includes(keyword.toLowerCase()));
+  return <main className="app-shell"><div className="mx-auto max-w-[1280px] px-5 sm:px-8"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-indigo-600">Catalog</p><h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">Products <span className="text-slate-400">{products.length}</span></h1><p className="mt-2 text-sm text-slate-500">Manage the items and services you offer.</p></div><Link to="/addproduct" className="rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700"><i className="fa-solid fa-plus mr-2 text-xs" />Add product</Link></div>
+    <div className="mt-7 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm"><div className="border-b border-slate-100 p-4"><div className="relative max-w-sm"><i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-xs text-slate-400" /><input className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100" placeholder="Search products" value={keyword} onChange={(e) => setKeyword(e.target.value)} /></div></div>
+      <div className="overflow-x-auto"><table className="min-w-full divide-y divide-slate-100 text-left"><thead className="bg-slate-50/80"><tr>{["Product", "Price", "Quantity", "Description", ""].map((title) => <th key={title} className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wider text-slate-500">{title}</th>)}</tr></thead><tbody className="divide-y divide-slate-100">{filtered.map((product) => <tr key={product._id} className="transition hover:bg-slate-50/70"><td className="whitespace-nowrap px-5 py-4 text-sm font-semibold text-slate-800">{product.name}</td><td className="whitespace-nowrap px-5 py-4 text-sm font-medium text-slate-700">₹{product.price}</td><td className="px-5 py-4 text-sm text-slate-500">{product.qty}</td><td className="max-w-sm truncate px-5 py-4 text-sm text-slate-500">{product.details}</td><td className="whitespace-nowrap px-5 py-4 text-right"><Link to={`/editproduct/${product._id}`} className="mr-3 text-sm font-semibold text-indigo-600 hover:text-indigo-800">Edit</Link><button onClick={() => removeProduct(product._id)} className="text-sm font-semibold text-rose-600 hover:text-rose-800">Delete</button></td></tr>)}</tbody></table></div>
+      {filtered.length === 0 && <p className="px-5 py-12 text-center text-sm text-slate-500">{keyword ? "No products match that search." : "No products yet. Add your first product to get started."}</p>}
+    </div></div></main>;
 };
 export default Productlist;
